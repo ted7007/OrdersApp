@@ -12,20 +12,20 @@ namespace InternalService.Controller;
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private readonly IRepository<Order, CreateOrderArgument, UpdateOrderArgument> _context;
+    private readonly IOrderRepository _repository;
     private readonly IMapper _mapper;
 
-    public OrderController(IRepository<Order, CreateOrderArgument, UpdateOrderArgument> context, IMapper mapper)
+    public OrderController(IOrderRepository repository, IMapper mapper)
     {
         _mapper = mapper;
-        _context = context;
+        _repository = repository;
     }
 
     [HttpPost]
     public ActionResult<OrderDto> Create(CreateOrderDto argument)
     {
         var mappedArgument = _mapper.Map<CreateOrderDto, CreateOrderArgument>(argument);
-        var result = _context.Create(mappedArgument);
+        var result = _repository.Create(mappedArgument);
         var mappedResult = _mapper.Map<Order, OrderDto>(result);
         return new OkObjectResult(mappedResult);
     }
@@ -33,7 +33,7 @@ public class OrderController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<OrderDto>> GetAll()
     {
-        var Orders = _context.GetAll();
+        var Orders = _repository.GetAll();
         var mappedOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(Orders);
         return new OkObjectResult(mappedOrders);
     }
@@ -41,23 +41,8 @@ public class OrderController : ControllerBase
     [HttpGet("{id}")]
     public ActionResult<OrderDto> Get(Guid id)
     {
-        var Order = _context.Get(id);
+        var Order = _repository.Get(id);
         var mappedOrder = _mapper.Map<Order, OrderDto>(Order); 
         return new OkObjectResult(mappedOrder);
-    }
-
-    [HttpDelete("{id}")]
-    public ActionResult Delete(Guid id)
-    {
-        _context.Delete(id);
-        return new OkResult();
-    }
-
-    [HttpPut]
-    public ActionResult Update(UpdateOrderDto argument)
-    {
-        var mappedArgument = _mapper.Map<UpdateOrderDto, UpdateOrderArgument>(argument);
-        _context.Update(mappedArgument);
-        return new OkResult();
     }
 }

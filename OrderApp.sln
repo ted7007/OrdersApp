@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPApiTemplate", "HTTPApiTemplate\HTTPApiTemplate.csproj", "{FCAF45F1-413A-421B-8702-B9D2EFABF4D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalService", "InternalService\InternalService.csproj", "{FCAF45F1-413A-421B-8702-B9D2EFABF4D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -15,8 +15,6 @@ public class OrderDtoMapperConfiguration : Profile
         
         CreateMap<CreateOrderArgument, CreateOrderDto>();
         CreateMap<CreateOrderDto, CreateOrderArgument>();
-        CreateMap<UpdateOrderArgument, UpdateOrderDto>();
-        CreateMap<UpdateOrderDto, UpdateOrderArgument>();
-        
+
     }
 }

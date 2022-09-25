@@ -2,5 +2,7 @@
 
 public enum OrderStatus
 {
-    
+    IsCoocking,
+    WaitingForPayment,
+    Closed
 }

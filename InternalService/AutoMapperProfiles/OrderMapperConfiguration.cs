@@ -10,7 +10,5 @@ public class OrderMapperConfiguration : Profile
     {
         CreateMap<Order, CreateOrderArgument>();
         CreateMap<CreateOrderArgument, Order>();
-        CreateMap<Order, UpdateOrderArgument>();
-        CreateMap<UpdateOrderArgument, Order>();
     }
 }

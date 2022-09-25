@@ -28,7 +28,7 @@ var connectionString =connectionStringBuilder.ConnectionString;
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddScoped
-    <IRepository<Product, CreateProductArgument, UpdateProductArgument>, ProductService>();
+    <IOrderRepository, OrderRepository>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

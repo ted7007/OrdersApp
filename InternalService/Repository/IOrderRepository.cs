@@ -10,8 +10,4 @@ public interface IOrderRepository
     public IEnumerable<Order> GetAll();
 
     public Order Get(Guid id);
-
-    public void Delete(Guid id);
-
-    public void Update(UpdateOrderArgument argument);
 }

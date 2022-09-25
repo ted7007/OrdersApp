@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.DataProtection.Repositories;
 
 namespace InternalService.Repository;
 
-public class OrderService : IRepository<Order, CreateOrderArgument, UpdateOrderArgument>
+public class OrderRepository : IOrderRepository
 {
     private readonly ApplicationContext _context;
     private readonly IMapper _mapper;
 
-    public OrderService(ApplicationContext context, IMapper mapper)
+    public OrderRepository(ApplicationContext context, IMapper mapper)
     {
         _mapper = mapper;
         _context = context;
@@ -34,16 +34,5 @@ public class OrderService : IRepository<Order, CreateOrderArgument, UpdateOrderA
     {
         return _context.Orders.Find(id) ?? throw new InvalidOperationException();
     }
-
-    public void Delete(Guid id)
-    {
-        _context.Orders.Remove(Get(id));
-        _context.SaveChanges();
-    }
-
-    public void Update(UpdateOrderArgument argument)
-    {
-        _context.Orders.Update(_mapper.Map<UpdateOrderArgument, Order>(argument));
-        _context.SaveChanges();
-    }
+    
 }
