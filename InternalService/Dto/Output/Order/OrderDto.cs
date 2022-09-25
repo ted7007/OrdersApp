@@ -14,5 +14,5 @@ public class OrderDto
 
     public DateTime DateOfCreation { get; set; }
 
-    public OrderStatus Status { get; set; }
+    public string Status { get; set; }
 }

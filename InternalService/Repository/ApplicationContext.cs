@@ -10,4 +10,15 @@ public class ApplicationContext : DbContext
     {
         Database.EnsureCreated();
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<Order>()
+            .Property(o => o.Status)
+            .HasConversion(
+                v => v.ToString(),
+                v => (OrderStatus)Enum.Parse(typeof(OrderStatus), v));
+        base.OnModelCreating(modelBuilder);
+    }
 }

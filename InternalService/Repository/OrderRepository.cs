@@ -19,7 +19,10 @@ public class OrderRepository : IOrderRepository
     public Order Create(CreateOrderArgument argument)
     {
         //todo async methods
-        var res = _context.Orders.Add(_mapper.Map<CreateOrderArgument, Order>(argument));
+        var mappedArgument = _mapper.Map<CreateOrderArgument, Order>(argument);
+        mappedArgument.DateOfCreation=DateTime.Now;
+        mappedArgument.Status = OrderStatus.WaitingForPayment;
+        var res = _context.Orders.Add(mappedArgument);
         _context.SaveChanges();
         
         return res.Entity;
