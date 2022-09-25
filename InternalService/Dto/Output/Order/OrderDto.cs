@@ -1,6 +1,6 @@
-﻿namespace HTTPApiTemplate.Dto.Output.Product;
+﻿namespace InternalService.Dto.Output.Order;
 
-public class ProductDto
+public class OrderDto
 {
     public Guid Id { get; set; }
 

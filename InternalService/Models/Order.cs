@@ -1,7 +1,8 @@
-﻿namespace HTTPApiTemplate.Repository.Argument;
+﻿namespace InternalService.Models;
 
-public class CreateProductArgument
+public class Order
 {
+    public Guid Id { get; set; }
 
     public string Name { get; set; }
 

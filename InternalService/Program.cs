@@ -1,9 +1,9 @@
 using System.Data.Common;
 using System.Reflection;
-using HTTPApiTemplate.Config;
-using HTTPApiTemplate.Models;
-using HTTPApiTemplate.Repository;
-using HTTPApiTemplate.Repository.Argument;
+using InternalService.Config;
+using InternalService.Models;
+using InternalService.Repository;
+using InternalService.Repository.Argument;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region mysql connection string  build
 var MySQLOptions =
-    builder.Configuration.GetSection(HTTPApiTemplate.Config.MySQLOptions.OptionName)
+    builder.Configuration.GetSection(InternalService.Config.MySQLOptions.OptionName)
                          .Get<MySQLOptions>();
 DbConnectionStringBuilder connectionStringBuilder = new DbConnectionStringBuilder();
 connectionStringBuilder.Add("Server", MySQLOptions.Server);

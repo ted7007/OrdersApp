@@ -1,6 +1,6 @@
-﻿using HTTPApiTemplate.Models;
+﻿using InternalService.Models;
 using Microsoft.EntityFrameworkCore;
-namespace HTTPApiTemplate.Repository;
+namespace InternalService.Repository;
 
 public class ApplicationContext : DbContext
 {

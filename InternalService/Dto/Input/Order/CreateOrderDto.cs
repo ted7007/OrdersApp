@@ -1,6 +1,6 @@
-﻿namespace HTTPApiTemplate.Dto.Input.Product;
+﻿namespace InternalService.Dto.Input.Order;
 
-public class CreateProductDto
+public class CreateOrderDto
 {
     public Guid Id { get; set; }
 

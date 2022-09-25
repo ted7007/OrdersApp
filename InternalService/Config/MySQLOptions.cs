@@ -1,4 +1,4 @@
-﻿namespace HTTPApiTemplate.Config;
+﻿namespace InternalService.Config;
 
 public class MySQLOptions
 {
