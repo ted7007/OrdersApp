@@ -1,5 +1,5 @@
 ﻿using InternalService.Models;
-using InternalService.Repository.Argument;
+using InternalService.Repository.Argument.Order;
 
 namespace InternalService.Repository;
 
