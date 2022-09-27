@@ -1,13 +1,13 @@
 ﻿using InternalService.Models;
 using InternalService.Repository.Argument.Order;
 
-namespace InternalService.Repository;
+namespace InternalService.Service.OrderService;
 
-public interface IOrderRepository
+public interface IOrderService
 {
-    public Order Create(Order order);
-    
     public IEnumerable<Order> GetAll();
 
     public Order Get(Guid id);
+
+    public Order Create(CreateOrderArgument argument);
 }

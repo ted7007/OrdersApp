@@ -1,6 +1,6 @@
 ﻿using InternalService.Models;
 
-namespace InternalService.Repository.Argument;
+namespace InternalService.Repository.Argument.Order;
 
 public class CreateOrderArgument
 {
@@ -13,4 +13,9 @@ public class CreateOrderArgument
     public DateTime DateOfCreation { get; set; }
 
     public OrderStatus Status { get; set; }
+    
+    
+    public OrderType Type { get; set; }
+    
+    public ICollection<Dish> Dishes { get; set; }
 }

@@ -1,6 +1,10 @@
-﻿namespace InternalService.Service.DishService;
+﻿using InternalService.Models;
 
-public class IDishService
+namespace InternalService.Service.DishService;
+
+public interface IDishService
 {
-    
+    public IEnumerable<Dish> GetAll();
+
+    public Dish Get(Guid id);
 }

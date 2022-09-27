@@ -2,10 +2,12 @@
 using InternalService.Repository;
 using InternalService.Models;
 using InternalService.Repository.Argument;
+using InternalService.Repository.Argument.Order;
 using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace InternalService.Repository;
-
+                                                                                               
 public class OrderRepository : IOrderRepository
 {
     private readonly ApplicationContext _context;
@@ -16,13 +18,10 @@ public class OrderRepository : IOrderRepository
         _mapper = mapper;
         _context = context;
     }
-    public Order Create(CreateOrderArgument argument)
+    public Order Create(Order order)
     {
         //todo async methods
-        var mappedArgument = _mapper.Map<CreateOrderArgument, Order>(argument);
-        mappedArgument.DateOfCreation=DateTime.Now;
-        mappedArgument.Status = OrderStatus.WaitingForPayment;
-        var res = _context.Orders.Add(mappedArgument);
+        var res = _context.Orders.Add(order);
         _context.SaveChanges();
         
         return res.Entity;
@@ -30,12 +29,15 @@ public class OrderRepository : IOrderRepository
 
     public IEnumerable<Order> GetAll()
     {
-        return _context.Orders.ToList();
+        return _context.Orders
+                                .Include(o => o.Dishes).ToList();
     }
 
     public Order Get(Guid id)
     {
-        return _context.Orders.Find(id) ?? throw new InvalidOperationException();
+        return _context.Orders
+                                .Include(o => o.Dishes)
+                                .First(o => o.Id == id);
     }
     
 }

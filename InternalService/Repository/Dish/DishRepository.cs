@@ -1,6 +1,28 @@
-﻿namespace InternalService.Repository;
+﻿using InternalService.Models;
+using Microsoft.EntityFrameworkCore;
 
-public class DishRepository
+namespace InternalService.Repository;
+
+public class DishRepository : IDishRepository
 {
+    private readonly ApplicationContext _context;
+
+    public DishRepository(ApplicationContext context)
+    {
+        _context = context;
+    }
+
+    public IEnumerable<Dish> GetAll()
+    {
+        return _context.Dishes
+                                .Include(d => d.Orders)
+                                .ToList();
+    }
     
+    public Dish Get(Guid id)
+    {
+        return _context.Dishes
+                                .Include(d => d.Orders)
+                                .FirstOrDefault(d => d.Id==id);
+    }
 }

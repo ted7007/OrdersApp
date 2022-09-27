@@ -4,6 +4,8 @@ using InternalService.Config;
 using InternalService.Models;
 using InternalService.Repository;
 using InternalService.Repository.Argument;
+using InternalService.Service.DishService;
+using InternalService.Service.OrderService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,12 +25,16 @@ connectionStringBuilder.Add("Password", MySQLOptions.Password);
 
 #endregion
 
-var connectionString =connectionStringBuilder.ConnectionString;
+var connectionString = connectionStringBuilder.ConnectionString;
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
-builder.Services.AddScoped
-    <IOrderRepository, OrderRepository>();
+
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IDishRepository, DishRepository>();
+builder.Services.AddScoped<IOrderService, OrderServices>();
+builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
