@@ -1,12 +1,4 @@
 ﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:25926",
-      "sslPort": 44351
-    }
-  },
   "profiles": {
     "Development": {
       "commandName": "Project",
@@ -15,19 +7,13 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MySQLOptions:Server":"127.0.0.1",
-        "MySQLOptions:Port":"3308",
-        "MySQLOptions:DatabaseName":"TemplateDataBase",
+        "MySQLOptions:Port":"5432",
+        "MySQLOptions:DatabaseName":"OrderDataBase",
         "MySQLOptions:UserName":"root",
         "MySQLOptions:Password":"password"
         
       }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
     }
+    
   }
 }

@@ -1,6 +1,6 @@
 ﻿namespace InternalService.Config;
 
-public class MySQLOptions
+public class DataBaseOptions
 {
     public const string OptionName = "MySQLOptions";
     

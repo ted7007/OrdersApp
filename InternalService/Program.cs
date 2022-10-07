@@ -12,15 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
                        //todo comments
 
 #region mysql connection string  build
-var MySQLOptions =
-    builder.Configuration.GetSection(InternalService.Config.MySQLOptions.OptionName)
-                         .Get<MySQLOptions>();
+var dataBaseOptions =
+    builder.Configuration.GetSection(InternalService.Config.DataBaseOptions.OptionName)
+                         .Get<DataBaseOptions>();
 DbConnectionStringBuilder connectionStringBuilder = new DbConnectionStringBuilder();
-connectionStringBuilder.Add("Server", MySQLOptions.Server);
-connectionStringBuilder.Add("Port", MySQLOptions.Port);
-connectionStringBuilder.Add("User", MySQLOptions.UserName);
-connectionStringBuilder.Add("Database", MySQLOptions.DatabaseName);
-connectionStringBuilder.Add("Password", MySQLOptions.Password);
+connectionStringBuilder.Add("Host", dataBaseOptions.Server);
+connectionStringBuilder.Add("Port", dataBaseOptions.Port);
+connectionStringBuilder.Add("Username", dataBaseOptions.UserName);
+connectionStringBuilder.Add("Database", dataBaseOptions.DatabaseName);
+connectionStringBuilder.Add("Password", dataBaseOptions.Password);
 
 
 #endregion
@@ -28,7 +28,7 @@ connectionStringBuilder.Add("Password", MySQLOptions.Password);
 var connectionString = connectionStringBuilder.ConnectionString;
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
+    options.UseNpgsql(connectionString));
 
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
