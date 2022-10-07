@@ -33,7 +33,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IDishRepository, DishRepository>();
-builder.Services.AddScoped<IOrderService, OrderServices>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddControllers();
 

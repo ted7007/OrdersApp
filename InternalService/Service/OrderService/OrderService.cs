@@ -6,13 +6,13 @@ using InternalService.Service.DishService;
 
 namespace InternalService.Service.OrderService;
 
-public class OrderServices : IOrderService
+public class OrderService : IOrderService
 {
     private readonly IOrderRepository _repository;
     private readonly IDishService _dishService;
     private readonly IMapper _mapper;
 
-    public OrderServices(IOrderRepository repository, IDishService dishService, IMapper mapper)
+    public OrderService(IOrderRepository repository, IDishService dishService, IMapper mapper)
     {
         _repository = repository;
         _dishService = dishService;
