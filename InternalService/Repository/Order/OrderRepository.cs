@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using InternalService.Repository;
+using InternalService.Service;
 using InternalService.Models;
-using InternalService.Repository.Argument;
-using InternalService.Repository.Argument.Order;
+using InternalService.Service.Argument;
+using InternalService.Service.Argument.Order;
 using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternalService.Repository;
+namespace InternalService.Service;
                                                                                                
 public class OrderRepository : IOrderRepository
 {

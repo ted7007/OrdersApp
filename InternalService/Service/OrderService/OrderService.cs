@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InternalService.Models;
-using InternalService.Repository;
-using InternalService.Repository.Argument.Order;
+using InternalService.Service;
+using InternalService.Service.Argument.Order;
 using InternalService.Service.DishService;
 
 namespace InternalService.Service.OrderService;
@@ -31,16 +31,18 @@ public class OrderService : IOrderService
 
     public Order Create(CreateOrderArgument argument)
     {
-        argument.DateOfCreation = DateTime.Now;
-        argument.Status = OrderStatus.WaitingForPayment;
-        for (var i = 0; i < argument.Dishes.Count;i++)
-        {
-            var oldDish = argument.Dishes.First();
-            var newDish = _dishService.Get(oldDish.Id);
-            argument.Dishes.Remove(oldDish);
-            argument.Dishes.Add(newDish);
-        }
         var mappedOrder = _mapper.Map<CreateOrderArgument, Order>(argument);
+        mappedOrder.DateOfCreation = DateTime.Now;
+        mappedOrder.Status = OrderStatus.WaitingForPayment;
+        for (var i = 0; i < mappedOrder.Dishes.Count;i++)
+        {
+            var oldDish = mappedOrder.Dishes.First();
+            var newDish = _dishService.Get(oldDish.Id);
+            mappedOrder.Dishes.Remove(oldDish);
+            mappedOrder.Dishes.Add(newDish);
+            mappedOrder.Price += newDish.Price;
+        }
+        
         return _repository.Create(mappedOrder);
     }
 }

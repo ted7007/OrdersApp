@@ -1,5 +1,5 @@
 ﻿using InternalService.Models;
-using InternalService.Repository;
+using InternalService.Service;
 
 namespace InternalService.Service.DishService;
 

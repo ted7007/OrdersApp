@@ -8,8 +8,6 @@ public class CreateOrderDto
 
     public string Customer { get; set; }
 
-    public decimal Price { get; set; }
-
     public Guid EmployeeId { get; set; }
 
     public OrderType Type { get; set; }

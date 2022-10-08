@@ -1,6 +1,6 @@
 ﻿using InternalService.Models;
 using Microsoft.EntityFrameworkCore;
-namespace InternalService.Repository;
+namespace InternalService.Service;
 
 public class ApplicationContext : DbContext
 {

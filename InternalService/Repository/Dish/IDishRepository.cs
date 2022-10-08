@@ -1,6 +1,6 @@
 ﻿using InternalService.Models;
 
-namespace InternalService.Repository;
+namespace InternalService.Service;
 
 public interface IDishRepository
 {

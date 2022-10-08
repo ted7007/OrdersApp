@@ -3,8 +3,8 @@ using InternalService.Dto.Input.Order;
 using InternalService.Dto.Output.Dish;
 using InternalService.Dto.Output.Order;
 using InternalService.Models;
-using InternalService.Repository;
-using InternalService.Repository.Argument;
+using InternalService.Service;
+using InternalService.Service.Argument;
 using InternalService.Service.DishService;
 using Microsoft.AspNetCore.Mvc;
 

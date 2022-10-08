@@ -2,9 +2,9 @@
 using InternalService.Dto.Input.Order;
 using InternalService.Dto.Output.Order;
 using InternalService.Models;
-using InternalService.Repository;
-using InternalService.Repository.Argument;
-using InternalService.Repository.Argument.Order;
+using InternalService.Service;
+using InternalService.Service.Argument;
+using InternalService.Service.Argument.Order;
 using InternalService.Service.OrderService;
 using Microsoft.AspNetCore.Mvc;
 
