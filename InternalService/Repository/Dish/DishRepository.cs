@@ -23,6 +23,6 @@ public class DishRepository : IDishRepository
     {
         return _context.Dishes
                                 .Include(d => d.Orders)
-                                .FirstOrDefault(d => d.Id==id);
+                                .First(d => d.Id==id);
     }
 }
