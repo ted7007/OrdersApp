@@ -20,7 +20,7 @@ public class DishService : IDishService
     
     public Dish Get(Guid id)
     {
-        return _repository.Get(id);
+        return _repository.Get(id) ?? throw new KeyNotFoundException($"dish is not found with id {id}");
     }
     
 }

@@ -26,7 +26,7 @@ public class OrderService : IOrderService
 
     public Order Get(Guid id)
     {
-        return _repository.Get(id);
+        return _repository.Get(id) ?? throw new KeyNotFoundException($"order is not found with id {id}");
     }
 
     public Order Create(CreateOrderArgument argument)
