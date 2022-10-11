@@ -34,15 +34,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpGet]
-    public ActionResult<IEnumerable<OrderDto>> GetAll()
-    {
-        var orders = _service.GetAll();
-        var mappedOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
-        return new OkObjectResult(mappedOrders);
-    }
-
-    [HttpGet("find")]
-    public ActionResult<IEnumerable<OrderDto>> GetList(OrderSearchParam param)
+    public ActionResult<IEnumerable<OrderDto>> GetList([FromHeader]OrderSearchParam param)
     {
         var orders = _service.GetList(param);
         var mappedOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);

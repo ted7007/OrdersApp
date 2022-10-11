@@ -23,13 +23,6 @@ public class OrderRepository : IOrderRepository
         return res.Entity;
     }
 
-    public IEnumerable<Models.Order> GetAll()
-    {
-        return _context.Orders
-                                .Include(o => o.Dishes)
-                                .ToList();
-    }
-
     public Models.Order Get(Guid id)
     {
         return _context.Orders

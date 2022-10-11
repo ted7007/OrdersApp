@@ -10,7 +10,7 @@ public class OrderSearchParam
 
     public Guid EmployeeId { get; set; }
 
-    public DateTime DateOfCreation { get; set; }
+    public DateTimeOffset DateOfCreation { get; set; }
 
     public OrderStatus? Status { get; set; }
 

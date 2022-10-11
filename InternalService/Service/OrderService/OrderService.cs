@@ -20,11 +20,6 @@ public class OrderService : IOrderService
         _dishService = dishService;
         _mapper = mapper;
     }
-    
-    public IEnumerable<Order> GetAll()
-    {
-        return _repository.GetAll();
-    }
 
     public Order Get(Guid id)
     {

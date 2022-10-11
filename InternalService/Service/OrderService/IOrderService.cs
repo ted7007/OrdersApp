@@ -6,8 +6,6 @@ namespace InternalService.Service.OrderService;
 
 public interface IOrderService
 {
-    public IEnumerable<Order> GetAll();
-
     public IEnumerable<Order> GetList(OrderSearchParam param);
 
     public Order Get(Guid id);
