@@ -13,7 +13,7 @@ public class OrderDto
 
     public Guid EmployeeId { get; set; }
 
-    public DateTime DateOfCreation { get; set; }
+    public DateTimeOffset DateOfCreation { get; set; }
 
     public string Status { get; set; }
 
