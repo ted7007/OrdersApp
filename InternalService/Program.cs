@@ -1,7 +1,9 @@
 using System.Data.Common;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using InternalService.Config;
 using InternalService.Models;
+using InternalService.Repository.Order;
 using InternalService.Service;
 using InternalService.Service.Argument;
 using InternalService.Service.DishService;
@@ -35,7 +37,12 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IDishRepository, DishRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IDishService, DishService>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddJsonOptions(opts =>
+                {
+                    var enumConverter = new JsonStringEnumConverter();
+                    opts.JsonSerializerOptions.Converters.Add(enumConverter);
+                });
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 var app = builder.Build();

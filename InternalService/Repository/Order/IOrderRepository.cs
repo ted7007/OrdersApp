@@ -1,13 +1,12 @@
-﻿using InternalService.Models;
-using InternalService.Service.Argument.Order;
-
-namespace InternalService.Service;
+﻿namespace InternalService.Repository.Order;
 
 public interface IOrderRepository
 {
-    public Order Create(Order order);
+    public Models.Order Create(Models.Order order);
     
-    public IEnumerable<Order> GetAll();
+    public IEnumerable<Models.Order> GetAll();
 
-    public Order Get(Guid id);
+    public Models.Order Get(Guid id);
+    
+    IEnumerable<Models.Order> GetList(Func<Models.Order, bool> predicate);
 }

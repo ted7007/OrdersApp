@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using InternalService.Service;
-using InternalService.Models;
-using InternalService.Service.Argument;
-using InternalService.Service.Argument.Order;
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternalService.Service;
+namespace InternalService.Repository.Order;
                                                                                                
 public class OrderRepository : IOrderRepository
 {
@@ -18,7 +14,7 @@ public class OrderRepository : IOrderRepository
         _mapper = mapper;
         _context = context;
     }
-    public Order Create(Order order)
+    public Models.Order Create(Models.Order order)
     {
         //todo async methods
         var res = _context.Orders.Add(order);
@@ -27,17 +23,26 @@ public class OrderRepository : IOrderRepository
         return res.Entity;
     }
 
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Models.Order> GetAll()
     {
         return _context.Orders
-                                .Include(o => o.Dishes).ToList();
+                                .Include(o => o.Dishes)
+                                .ToList();
     }
 
-    public Order Get(Guid id)
+    public Models.Order Get(Guid id)
     {
         return _context.Orders
                                 .Include(o => o.Dishes)
                                 .First(o => o.Id == id);
     }
-    
+
+    public IEnumerable<Models.Order> GetList(Func<Models.Order, bool> predicate)
+    {
+        return _context.Orders
+                                .Include(o => o.Dishes)
+                                .Where(predicate)
+                                .ToList();
+        
+    }
 }
