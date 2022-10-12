@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using InternalService.AutoMapperProfiles;
 using InternalService.Models;
-using InternalService.Service;
+using InternalService.Repository.Order;
 using InternalService.Service.Argument.Order;
 using InternalService.Service.DishService;
 using InternalService.Service.OrderService;
+using InternalService.Service.Param;
 using Moq;
 
 namespace InternalServiceTests;
@@ -14,6 +15,7 @@ public class OrderServiceTests
     private Mock<IOrderRepository> _repository;
     private Mock<IDishService> _dishService;
     private Mapper _mapper;
+    private OrderService _sup;
 
     [SetUp]
     public void Init()
@@ -25,64 +27,95 @@ public class OrderServiceTests
         var configuration = new MapperConfiguration(cfg => 
             cfg.AddProfiles(new Profile[]{orderProfile, dishProfile}));
         _mapper = new Mapper(configuration);
+        _sup = new OrderService(_repository.Object, _dishService.Object, _mapper);
     }
 
     [Test]
-    public void GetAll_ReturnsAllOrders()
+    public void GetList_WithEmptyParam_ReturnsAllOrders()
     {
           //Arrange
-          var orders = GetTestOrders();
-          _repository.Setup(r => r.GetAll()).Returns(orders);
-          var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
+          var ordersMock =new Mock<List<Order>>();
+          var expected = ordersMock.Object;
+          _repository.Setup(r => r
+              .GetList(It.IsAny<Func<Order, bool>>()))
+              .Returns(expected);
+          var emptySearchParam = new OrderSearchParam();
           
           //Act
-          var result = service.GetAll();
+          var actual = _sup.GetList(emptySearchParam);
           
           //Assert
-          Assert.IsNotNull(result);
-          Assert.IsTrue(result.Count() == 2);
+          Assert.That(actual,Is.EqualTo(expected));
     }
 
     [Test]
     public void Get_ReturnsOrder()
     {
         //Arrange
-        var testId = Guid.NewGuid();
-        var testOrder = new Order() { Id = testId };
-        _repository.Setup(r => r.Get(testId)).Returns(testOrder);
+        var testId = new Guid();
+        var expected = new Mock<Order>().Object;
+        _repository.Setup(r => r.Get(It.IsAny<Guid>())).Returns(expected);
         var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
         
         //Act
-        var result = service.Get(testId);
+        var actual = service.Get(testId);
         
         //Assert
         _repository.Verify(r => r.Get(testId));
-        Assert.IsNotNull(result);
-        Assert.IsTrue(result.Id == testId);
-
-    }
+        Assert.That(actual, Is.EqualTo(expected));
+                              
+    }                                                   
 
     [Test]
-    public void Create_InputsArgument_CallsServices()
+    public void Create_InputArgument_CallsRepository()
     {
        //Arrange
-       var testArgument = GetTestArgument();
-       _dishService.Setup(s => s.Get(It.IsAny<Guid>())).Returns(new Dish());
+       var testCreateArgument = new Mock<CreateOrderArgument>();
+       var expectedOrder = new Mock<Order>().Object;
+       _repository.Setup(r => r.Create(It.IsAny<Order>())).Returns(expectedOrder);
        var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
        
        //Act
-       service.Create(testArgument);
+       var actual = service.Create(testCreateArgument.Object);
        
        //Assert
        _repository.Verify(r => r.Create(It.IsAny<Order>()));
-       _dishService.Verify(s => s.Get(It.IsAny<Guid>()));
+       Assert.That(actual, Is.EqualTo(expectedOrder));
+       //_dishService.Verify(s => s.Get(It.IsAny<Guid>()));
+
+    }
+    
+    [Test]
+    public void Create_InputArgument_CallsDishService()
+    {
+        //Arrange
+        var expectedOrder = new Mock<Order>();
+        var expectedDish = new Dish() { Id = Guid.NewGuid()};
+        var testCreateArgument = new CreateOrderArgument() { Dishes = new List<Dish> { expectedDish } };
+        _repository
+            .Setup(r => r.Create(It.IsAny<Order>()))
+            .Returns(expectedOrder.Object);
+        _dishService
+            .Setup(s => s.Get(It.IsAny<Guid>()))
+            .Returns(expectedDish);
+        var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
+       
+        //Act
+        var actual = service.Create(testCreateArgument);
+       
+        //Assert
+        _dishService.Verify(s => s.
+            Get(It.
+                Is<Guid>(i => i == expectedDish.Id)));
+        Assert.That(actual, Is.EqualTo(expectedOrder.Object));
+        
 
     }
 
     [Test]
     public void Create_InputsArgument_ReturnsRightPrice()
     {
-        //Assert
+        //Arrange
         var testArgument = GetTestArgument();
         decimal expectedPrice = 0;
         foreach (var d in testArgument.Dishes)
@@ -90,13 +123,12 @@ public class OrderServiceTests
             _dishService.Setup(s => s.Get(d.Id)).Returns(d);
             expectedPrice += d.Price;
         }
-        var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
-        
+
         //Act
-        service.Create(testArgument);
+        _sup.Create(testArgument);
         
         //Assert
-        _repository.Verify(r => r
+        _repository.Verify(r => r   // проверяем, сложились ли цены на блюда в заказ
             .Create(It.
                 Is<Order>(order => order.Price == expectedPrice )));
 
@@ -158,6 +190,4 @@ public class OrderServiceTests
         };
         return orders;
     }
-    
-    
 }
