@@ -17,6 +17,9 @@ public class OrderServiceTests
     private Mapper _mapper;
     private OrderService _sup;
 
+    /// <summary>
+    /// configuration of infrastructure for tests
+    /// </summary>
     [SetUp]
     public void Init()
     {
@@ -30,8 +33,11 @@ public class OrderServiceTests
         _sup = new OrderService(_repository.Object, _dishService.Object, _mapper);
     }
 
+    /// <summary>
+    /// test for getting value from repo
+    /// </summary>
     [Test]
-    public void GetList_WithEmptyParam_ReturnsAllOrders()
+    public void GetList_ReturnsOrders()
     {
           //Arrange
           var ordersMock =new Mock<List<Order>>();
@@ -45,9 +51,16 @@ public class OrderServiceTests
           var actual = _sup.GetList(emptySearchParam);
           
           //Assert
+          
+          _repository.Verify(r => r.
+              GetList(It.
+                  IsAny<Func<Order, bool>>()));
           Assert.That(actual,Is.EqualTo(expected));
     }
 
+    /// <summary>
+    /// test for getting value from repo
+    /// </summary>
     [Test]
     public void Get_ReturnsOrder()
     {
@@ -66,6 +79,9 @@ public class OrderServiceTests
                               
     }                                                   
 
+    /// <summary>
+    /// test for inputting/getting value in/from repo
+    /// </summary>
     [Test]
     public void Create_InputArgument_CallsRepository()
     {
@@ -81,10 +97,12 @@ public class OrderServiceTests
        //Assert
        _repository.Verify(r => r.Create(It.IsAny<Order>()));
        Assert.That(actual, Is.EqualTo(expectedOrder));
-       //_dishService.Verify(s => s.Get(It.IsAny<Guid>()));
 
     }
     
+    /// <summary>
+    /// test for inputting/getting value in/from dishService
+    /// </summary>
     [Test]
     public void Create_InputArgument_CallsDishService()
     {
@@ -112,6 +130,9 @@ public class OrderServiceTests
 
     }
 
+    /// <summary>
+    /// test for calculating price in order
+    /// </summary>
     [Test]
     public void Create_InputsArgument_ReturnsRightPrice()
     {
@@ -123,14 +144,15 @@ public class OrderServiceTests
             _dishService.Setup(s => s.Get(d.Id)).Returns(d);
             expectedPrice += d.Price;
         }
-
+        
         //Act
-        _sup.Create(testArgument);
+        _sup.Create(testArgument); // i didnt imitate returns value by repository,
+                                   // so i dont check actual value 
         
         //Assert
-        _repository.Verify(r => r   // проверяем, сложились ли цены на блюда в заказ
+        _repository.Verify(r => r            // however i check order that inputs to repository 
             .Create(It.
-                Is<Order>(order => order.Price == expectedPrice )));
+                Is<Order>(order => order.Price == expectedPrice )));       
 
     }
 
@@ -158,36 +180,5 @@ public class OrderServiceTests
             }
         };
         return argument;
-    }
-    private List<Order> GetTestOrders()
-    {
-        var orders = new List<Order>
-        {
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Customer = "ted7007@yandex.ru",
-                Price = 100,
-                EmployeeId = Guid.Parse("d0e5d24e-ea32-4262-8b32-f273341c6ef5"),
-                Type = OrderType.Offline,
-                Dishes = new List<Dish>()
-                {
-                    new() { Id = Guid.Parse("d0e5d24e-ea32-4262-8b32-f273341c6ef4") }
-                }
-            },
-            new()
-            {
-                Id = Guid.NewGuid(),
-                Customer = "abc@yandex.ru",
-                Price = 150,
-                EmployeeId = Guid.Parse("d0e5d24e-ea32-4262-8b32-f273341c6ef5"),
-                Type = OrderType.Online,
-                Dishes = new List<Dish>()
-                {
-                    new() { Id = Guid.Parse("d0e5d24e-ea32-4262-8b32-f273341c6ef6") }
-                }
-            }
-        };
-        return orders;
     }
 }
