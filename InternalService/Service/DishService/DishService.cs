@@ -13,14 +13,14 @@ public class DishService : IDishService
         _repository = repository;
     }
     
-    public IEnumerable<Dish> GetAll()
+    public async Task<IEnumerable<Dish>> GetAllAsync()
     {
-        return _repository.GetAll();
+        return await _repository.GetAll();
     }
     
-    public Dish Get(Guid id)
+    public async Task<Dish> GetAsync(Guid id)
     {
-        return _repository.Get(id) ?? throw new KeyNotFoundException($"dish is not found with id {id}");
+        return await (_repository.Get(id) ?? throw new KeyNotFoundException($"dish is not found with id {id}"));
     }
     
 }

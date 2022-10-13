@@ -6,9 +6,9 @@ namespace InternalService.Service.OrderService;
 
 public interface IOrderService
 {
-    public IEnumerable<Order> GetList(OrderSearchParam param);
+    public Task<IEnumerable<Models.Order>> GetListAsync(OrderSearchParam param);
 
-    public Order Get(Guid id);
+    public Task<Models.Order> GetAsync(Guid id);
 
-    public Order Create(CreateOrderArgument argument);
+    public Task<Models.Order> CreateAsync(CreateOrderArgument argument);
 }

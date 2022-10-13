@@ -11,5 +11,5 @@ public class CreateOrderArgument
     
     public OrderType Type { get; set; }
     
-    public ICollection<Dish> Dishes { get; set; }
+    public ICollection<Models.Dish> Dishes { get; set; }
 }

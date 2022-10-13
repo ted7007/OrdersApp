@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using InternalService.Models;
-using InternalService.Repository.Order;
-using InternalService.Service;
 using InternalService.Service.Argument.Order;
+using InternalService.Service;
 using InternalService.Service.DishService;
+using InternalService.Service.Order;
 using InternalService.Service.Param;
 
 namespace InternalService.Service.OrderService;
@@ -27,9 +27,9 @@ public class OrderService : IOrderService
     /// <param name="id">Order's id</param>
     /// <returns></returns>
     /// <exception cref="KeyNotFoundException">throws if Order wasnt found</exception>
-    public Order Get(Guid id)
+    public async Task<Models.Order> GetAsync(Guid id)
     {
-        return _repository.Get(id) ?? throw new KeyNotFoundException($"order is not found with id {id}");
+        return await _repository.GetAsync(id) ?? throw new KeyNotFoundException($"order is not found with id {id}");
     }
 
     /// <summary>
@@ -37,10 +37,10 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="argument">argument for creating order</param>
     /// <returns>created order</returns>
-    public Order Create(CreateOrderArgument argument)
+    public async Task<Models.Order> CreateAsync(CreateOrderArgument argument)
     {
-        var orderForCreate = ProcessCreateArgumentAndGetOrder(argument);
-        return _repository.Create(orderForCreate);
+        var orderForCreate = await ProcessCreateArgumentAndGetOrderAsync(argument);
+        return await _repository.CreateAsync(orderForCreate);
     }
 
     /// <summary>
@@ -48,10 +48,10 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="param">param for getting List of orders</param>
     /// <returns>list of orders that satisfies param</returns>
-    public IEnumerable<Order> GetList(OrderSearchParam param)
+    public async Task<IEnumerable<Models.Order>> GetListAsync(OrderSearchParam param)
     {
-        Func<Order, bool> predicate = GetPredicateFromOrderSearchParam(param);
-        return  _repository.GetList(predicate);
+        Func<Models.Order, bool> predicate = GetPredicateFromOrderSearchParam(param);
+        return await _repository.GetListAsync(predicate);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="param"></param>
     /// <returns>predicate from param</returns>
-    private Func<Order, bool> GetPredicateFromOrderSearchParam(OrderSearchParam param)
+    private Func<Models.Order, bool> GetPredicateFromOrderSearchParam(OrderSearchParam param)
     {
        return  order => 
                     (param.Customer == default || param.Customer.ToLower() == order.Customer.ToLower())
@@ -75,15 +75,15 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="argument"></param>
     /// <returns>order from argument</returns>
-    private Order ProcessCreateArgumentAndGetOrder(CreateOrderArgument argument)
+    private async Task<Models.Order> ProcessCreateArgumentAndGetOrderAsync(CreateOrderArgument argument)
     { 
-        var mappedOrder = _mapper.Map<CreateOrderArgument, Order>(argument);
+        var mappedOrder = _mapper.Map<CreateOrderArgument, Models.Order>(argument);
         mappedOrder.DateOfCreation = DateTimeOffset.UtcNow;
         mappedOrder.Status = OrderStatus.WaitingForPayment;
         for (var i = 0; i < mappedOrder.Dishes.Count;i++)
         {
             var oldDish = mappedOrder.Dishes.First();
-            var newDish = _dishService.Get(oldDish.Id);
+            var newDish = await _dishService.GetAsync(oldDish.Id);
             mappedOrder.Dishes.Remove(oldDish);
             mappedOrder.Dishes.Add(newDish);
             mappedOrder.Price += newDish.Price;

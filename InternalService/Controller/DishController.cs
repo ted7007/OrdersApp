@@ -24,9 +24,9 @@ public class DishController
     }
     
     [HttpGet]
-    public ActionResult<IEnumerable<DishDto>> GetAll()
+    public async Task<ActionResult<IEnumerable<DishDto>>> GetAllAsync()
     {
-        var dishes = _service.GetAll();
+        var dishes = await _service.GetAllAsync();
         var mappedOrders = _mapper.Map<IEnumerable<Dish>, IEnumerable<DishDto>>(dishes);
         return new OkObjectResult(mappedOrders);
     }

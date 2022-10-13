@@ -25,27 +25,27 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<OrderDto> Create(CreateOrderDto argument)
+    public async Task<ActionResult<OrderDto>> Create(CreateOrderDto argument)
     {
         var mappedArgument = _mapper.Map<CreateOrderDto, CreateOrderArgument>(argument);
-        var result = _service.Create(mappedArgument);
+        var result = await _service.CreateAsync(mappedArgument);
         var mappedResult = _mapper.Map<Order, OrderDto>(result);
         return new OkObjectResult(mappedResult);
     }
     
     [HttpGet]
-    public ActionResult<IEnumerable<OrderDto>> GetList([FromHeader]OrderSearchParam param)
+    public async Task<ActionResult<IEnumerable<OrderDto>>> GetList([FromHeader]OrderSearchParam param)
     {
-        var orders = _service.GetList(param);
+        var orders = await _service.GetListAsync(param);
         var mappedOrders = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
         return new OkObjectResult(mappedOrders);
 
     }
 
     [HttpGet("{id}")]
-    public ActionResult<OrderDto> Get(Guid id)
+    public async Task<ActionResult<OrderDto>> Get(Guid id)
     {
-        var order = _service.Get(id);
+        var order = await _service.GetAsync(id);
         var mappedOrder = _mapper.Map<Order, OrderDto>(order);          
         return new OkObjectResult(mappedOrder);
     }

@@ -5,7 +5,7 @@ namespace InternalService.Service;
 public interface IDishRepository
 {
     
-    public IEnumerable<Dish> GetAll();
+    public Task<IEnumerable<Models.Dish>> GetAll();
 
-    public Dish Get(Guid id);
+    public Task<Models.Dish> Get(Guid id);
 }

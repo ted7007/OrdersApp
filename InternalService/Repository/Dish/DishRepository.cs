@@ -12,17 +12,17 @@ public class DishRepository : IDishRepository
         _context = context;
     }
 
-    public IEnumerable<Dish> GetAll()
+    public async Task<IEnumerable<Models.Dish>> GetAll()
     {
-        return _context.Dishes
+        return await _context.Dishes
                                 .Include(d => d.Orders)
-                                .ToList();
+                                .ToListAsync();
     }
     
-    public Dish Get(Guid id)
+    public async Task<Models.Dish> Get(Guid id)
     {
-        return _context.Dishes
+        return await _context.Dishes
                                 .Include(d => d.Orders)
-                                .First(d => d.Id==id);
+                                .FirstAsync(d => d.Id==id);
     }
 }

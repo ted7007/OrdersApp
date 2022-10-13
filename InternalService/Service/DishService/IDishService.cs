@@ -4,7 +4,7 @@ namespace InternalService.Service.DishService;
 
 public interface IDishService
 {
-    public IEnumerable<Dish> GetAll();
+    public Task<IEnumerable<Dish>> GetAllAsync();
 
-    public Dish Get(Guid id);
+    public Task<Dish> GetAsync(Guid id);
 }

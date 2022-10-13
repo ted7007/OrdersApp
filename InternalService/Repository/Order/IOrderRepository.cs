@@ -1,10 +1,10 @@
-﻿namespace InternalService.Repository.Order;
+﻿namespace InternalService.Service.Order;
 
 public interface IOrderRepository
 {
-    public Models.Order Create(Models.Order order);
+    public Task<Models.Order> CreateAsync(Models.Order order);
 
-    public Models.Order Get(Guid id);
+    public Task<Models.Order> GetAsync(Guid id);
     
-    IEnumerable<Models.Order> GetList(Func<Models.Order, bool> predicate);
+    public Task<IEnumerable<Models.Order>> GetListAsync(Func<Models.Order, bool> predicate);
 }

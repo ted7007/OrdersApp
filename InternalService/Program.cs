@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using InternalService.Config;
 using InternalService.Models;
-using InternalService.Repository.Order;
+using InternalService.Service.Order;
 using InternalService.Service;
 using InternalService.Service.Argument;
 using InternalService.Service.DishService;

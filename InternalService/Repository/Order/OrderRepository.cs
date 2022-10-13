@@ -2,7 +2,7 @@
 using InternalService.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternalService.Repository.Order;
+namespace InternalService.Service.Order;
                                                                                                
 public class OrderRepository : IOrderRepository
 {
@@ -14,28 +14,29 @@ public class OrderRepository : IOrderRepository
         _mapper = mapper;
         _context = context;
     }
-    public Models.Order Create(Models.Order order)
+    public async Task<Models.Order> CreateAsync(Models.Order order)
     {
         //todo async methods
-        var res = _context.Orders.Add(order);
+        var res = await _context.Orders.AddAsync(order);
         _context.SaveChanges();
         
         return res.Entity;
     }
 
-    public Models.Order Get(Guid id)
+    public async Task<Models.Order> GetAsync(Guid id)
     {
-        return _context.Orders
+        return await _context.Orders
                                 .Include(o => o.Dishes)
-                                .First(o => o.Id == id);
+                                .FirstAsync(o => o.Id == id);
     }
 
-    public IEnumerable<Models.Order> GetList(Func<Models.Order, bool> predicate)
+    public async Task<IEnumerable<Models.Order>> GetListAsync(Func<Models.Order, bool> predicate)
     {
-        return _context.Orders
+        return await _context.Orders
                                 .Include(o => o.Dishes)
                                 .Where(predicate)
-                                .ToList();
+                                .AsQueryable()
+                                .ToListAsync();
         
     }
 }
