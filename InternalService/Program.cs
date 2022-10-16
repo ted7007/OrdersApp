@@ -3,7 +3,8 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using InternalService.Config;
 using InternalService.Models;
-using InternalService.Service.Order;
+using InternalService.Repository.Dish;
+using InternalService.Repository.Order;
 using InternalService.Service;
 using InternalService.Service.Argument;
 using InternalService.Service.DishService;
@@ -57,8 +58,8 @@ app.Run();
  * global logging
  * global exception handler
  * authorization & authentification
- * automapper
- * Data Access Layer(?) Unity repo?
+ * ~automapper~
+ * ~Data Access Layer(?) Unity repo?~
  
  
 */

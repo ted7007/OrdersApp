@@ -1,4 +1,5 @@
 ﻿using InternalService.Models;
+using InternalService.Repository.Dish;
 using InternalService.Service;
 
 namespace InternalService.Service.DishService;

@@ -1,4 +1,4 @@
-﻿namespace InternalService.Service.Order;
+﻿namespace InternalService.Repository.Order;
 
 public interface IOrderRepository
 {

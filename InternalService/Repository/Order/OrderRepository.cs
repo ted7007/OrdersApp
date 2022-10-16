@@ -2,7 +2,7 @@
 using InternalService.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternalService.Service.Order;
+namespace InternalService.Repository.Order;
                                                                                                
 public class OrderRepository : IOrderRepository
 {

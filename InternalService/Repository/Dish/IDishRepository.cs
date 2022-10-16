@@ -1,6 +1,4 @@
-﻿using InternalService.Models;
-
-namespace InternalService.Service;
+﻿namespace InternalService.Repository.Dish;
 
 public interface IDishRepository
 {

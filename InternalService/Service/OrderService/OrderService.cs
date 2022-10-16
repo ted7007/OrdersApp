@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using InternalService.Models;
+using InternalService.Repository.Order;
 using InternalService.Service.Argument.Order;
 using InternalService.Service;
 using InternalService.Service.DishService;
-using InternalService.Service.Order;
 using InternalService.Service.Param;
 
 namespace InternalService.Service.OrderService;

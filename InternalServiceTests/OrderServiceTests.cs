@@ -37,23 +37,23 @@ public class OrderServiceTests
     /// test for getting value from repo
     /// </summary>
     [Test]
-    public void GetList_ReturnsOrders()
+    public async Task GetList_ReturnsOrders()
     {
           //Arrange
           var ordersMock =new Mock<List<Order>>();
           var expected = ordersMock.Object;
-          _repository.Setup(r => r
-              .GetList(It.IsAny<Func<Order, bool>>()))
-              .Returns(expected);
+        _repository.Setup(r => r
+              .GetListAsync(It.IsAny<Func<Order, bool>>()))
+              .Returns(Task.FromResult<IEnumerable<Order>>(expected));
           var emptySearchParam = new OrderSearchParam();
           
           //Act
-          var actual = _sup.GetList(emptySearchParam);
+          var actual = await _sup.GetListAsync(emptySearchParam);
           
           //Assert
           
           _repository.Verify(r => r.
-              GetList(It.
+              GetListAsync(It.
                   IsAny<Func<Order, bool>>()));
           Assert.That(actual,Is.EqualTo(expected));
     }
@@ -62,19 +62,21 @@ public class OrderServiceTests
     /// test for getting value from repo
     /// </summary>
     [Test]
-    public void Get_ReturnsOrder()
+    public async Task Get_ReturnsOrder()
     {
         //Arrange
         var testId = new Guid();
         var expected = new Mock<Order>().Object;
-        _repository.Setup(r => r.Get(It.IsAny<Guid>())).Returns(expected);
+        _repository.Setup(r => r
+            .GetAsync(It.IsAny<Guid>()))
+            .Returns(Task.FromResult(expected));
         var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
         
         //Act
-        var actual = service.Get(testId);
+        var actual = await service.GetAsync(testId);
         
         //Assert
-        _repository.Verify(r => r.Get(testId));
+        _repository.Verify(r => r.GetAsync(testId));
         Assert.That(actual, Is.EqualTo(expected));
                               
     }                                                   
@@ -83,19 +85,21 @@ public class OrderServiceTests
     /// test for inputting/getting value in/from repo
     /// </summary>
     [Test]
-    public void Create_InputArgument_CallsRepository()
+    public async Task Create_InputArgument_CallsRepository()
     {
        //Arrange
        var testCreateArgument = new Mock<CreateOrderArgument>();
        var expectedOrder = new Mock<Order>().Object;
-       _repository.Setup(r => r.Create(It.IsAny<Order>())).Returns(expectedOrder);
+       _repository.Setup(r => r
+           .CreateAsync(It.IsAny<Order>()))
+           .Returns(Task.FromResult(expectedOrder));
        var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
        
        //Act
-       var actual = service.Create(testCreateArgument.Object);
+       var actual = await service.CreateAsync(testCreateArgument.Object);
        
        //Assert
-       _repository.Verify(r => r.Create(It.IsAny<Order>()));
+       _repository.Verify(r => r.CreateAsync(It.IsAny<Order>()));
        Assert.That(actual, Is.EqualTo(expectedOrder));
 
     }
@@ -104,28 +108,30 @@ public class OrderServiceTests
     /// test for inputting/getting value in/from dishService
     /// </summary>
     [Test]
-    public void Create_InputArgument_CallsDishService()
+    public async Task Create_InputArgument_CallsDishService()
     {
         //Arrange
-        var expectedOrder = new Mock<Order>();
+        var expectedOrder = new Mock<Order>().Object;
         var expectedDish = new Dish() { Id = Guid.NewGuid()};
         var testCreateArgument = new CreateOrderArgument() { Dishes = new List<Dish> { expectedDish } };
         _repository
-            .Setup(r => r.Create(It.IsAny<Order>()))
-            .Returns(expectedOrder.Object);
+            .Setup(r => r
+                .CreateAsync(It.IsAny<Order>()))
+                .Returns(Task.FromResult(expectedOrder));
         _dishService
-            .Setup(s => s.Get(It.IsAny<Guid>()))
-            .Returns(expectedDish);
+            .Setup(s => s
+                .GetAsync(It.IsAny<Guid>()))
+                .Returns(Task.FromResult(expectedDish));
         var service = new OrderService(_repository.Object, _dishService.Object, _mapper);
        
         //Act
-        var actual = service.Create(testCreateArgument);
+        var actual = await service.CreateAsync(testCreateArgument);
        
         //Assert
         _dishService.Verify(s => s.
-            Get(It.
+            GetAsync(It.
                 Is<Guid>(i => i == expectedDish.Id)));
-        Assert.That(actual, Is.EqualTo(expectedOrder.Object));
+        Assert.That(actual, Is.EqualTo(expectedOrder));
         
 
     }
@@ -134,24 +140,26 @@ public class OrderServiceTests
     /// test for calculating price in order
     /// </summary>
     [Test]
-    public void Create_InputsArgument_ReturnsRightPrice()
+    public async Task Create_InputsArgument_ReturnsRightPrice()
     {
         //Arrange
         var testArgument = GetTestArgument();
         decimal expectedPrice = 0;
         foreach (var d in testArgument.Dishes)
         {
-            _dishService.Setup(s => s.Get(d.Id)).Returns(d);
+            _dishService.Setup(s => s
+                .GetAsync(d.Id))
+                .Returns(Task.FromResult(d));
             expectedPrice += d.Price;
         }
         
         //Act
-        _sup.Create(testArgument); // i didnt imitate returns value by repository,
+        await _sup.CreateAsync(testArgument); // i didnt imitate returns value by repository,
                                    // so i dont check actual value 
         
         //Assert
         _repository.Verify(r => r            // however i check order that inputs to repository 
-            .Create(It.
+            .CreateAsync(It.
                 Is<Order>(order => order.Price == expectedPrice )));       
 
     }

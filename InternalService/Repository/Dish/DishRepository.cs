@@ -1,7 +1,7 @@
-﻿using InternalService.Models;
+﻿using InternalService.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace InternalService.Service;
+namespace InternalService.Repository.Dish;
 
 public class DishRepository : IDishRepository
 {
