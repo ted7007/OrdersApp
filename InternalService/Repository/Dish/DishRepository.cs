@@ -27,5 +27,6 @@ public class DishRepository : IDishRepository
     public void Update(Models.Dish dish)
     { 
         _context.Dishes.Update(dish);
+        _context.SaveChanges();
     }
 }
