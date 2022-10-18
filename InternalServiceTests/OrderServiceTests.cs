@@ -131,6 +131,9 @@ public class OrderServiceTests
         _dishService.Verify(s => s.
             GetAsync(It.
                 Is<Guid>(i => i == expectedDish.Id)));
+        _dishService.Verify(s => s
+            .IncreaseCountOrders(It
+                .Is<Guid>(i => i == expectedDish.Id)));
         Assert.That(actual, Is.EqualTo(expectedOrder));
         
 

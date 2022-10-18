@@ -84,6 +84,7 @@ public class OrderService : IOrderService
         {
             var oldDish = mappedOrder.Dishes.First();
             var newDish = await _dishService.GetAsync(oldDish.Id);
+            _dishService.IncreaseCountOrders(newDish.Id);
             mappedOrder.Dishes.Remove(oldDish);
             mappedOrder.Dishes.Add(newDish);
             mappedOrder.Price += newDish.Price;
