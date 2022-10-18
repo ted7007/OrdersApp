@@ -9,9 +9,7 @@ public class DishMapperConfiguration : Profile
 {
     public DishMapperConfiguration()
     {
-        CreateMap<Dish, DishDto>()
-            .ForMember("CountOrders", opt => 
-                opt.MapFrom(src => src.Orders.Count));
+        CreateMap<Dish, DishDto>();
         CreateMap<InputDishDto, Dish>();
     }
 }

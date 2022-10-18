@@ -23,5 +23,12 @@ public class DishService : IDishService
     {
         return await (_repository.Get(id) ?? throw new KeyNotFoundException($"dish is not found with id {id}"));
     }
+
+    public async Task IncreaseCountOrders(Guid id)
+    {
+        var dish = await GetAsync(id);
+        dish.CountOrders++;
+        _repository.Update(dish);
+    }
     
 }

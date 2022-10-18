@@ -10,10 +10,5 @@ public class Dish
 
     public decimal Price { get; set; }
 
-    public int CountOrders
-    {
-        get { return Orders.Count; }
-    }
-
-    public ICollection<Order> Orders { get; set; }
+    public int CountOrders { get; set; }
 }

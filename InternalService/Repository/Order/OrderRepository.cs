@@ -16,9 +16,9 @@ public class OrderRepository : IOrderRepository
     }
     public async Task<Models.Order> CreateAsync(Models.Order order)
     {
-        //todo async methods
+        order = UpdateToUtc(order);
         var res = await _context.Orders.AddAsync(order);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         
         return res.Entity;
     }
@@ -33,10 +33,16 @@ public class OrderRepository : IOrderRepository
     public async Task<IEnumerable<Models.Order>> GetListAsync(Func<Models.Order, bool> predicate)
     {
         return await _context.Orders
-                                .Include(o => o.Dishes)
-                                .Where(predicate)
-                                .AsQueryable()
-                                .ToListAsync();
-        
+            .Include(o => o.Dishes)
+            .Where(predicate)
+            .AsQueryable()
+            .ToListAsyncSafe();
+
+    }
+
+    private Models.Order UpdateToUtc(Models.Order order)
+    {
+         order.DateOfCreation = DateTime.SpecifyKind(order.DateOfCreation, DateTimeKind.Utc);
+         return order;
     }
 }

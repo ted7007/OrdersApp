@@ -1,6 +1,6 @@
 ﻿using InternalService.Models;
 using Microsoft.EntityFrameworkCore;
-namespace InternalService.Service;
+namespace InternalService.Repository;
 
 public class ApplicationContext : DbContext
 {
@@ -38,17 +38,11 @@ public class ApplicationContext : DbContext
                         Id = Guid.NewGuid(),
                         Calory = 200f,
                         Price = 400,
-                        Title = "Pizza",
-                        Orders = new List<Models.Order>()
+                        Title = "Pizza"
                     }
                 });
-        modelBuilder
-            .Entity<Models.Dish>()
-            .HasMany(dish => dish.Orders)
-            .WithMany(order => order.Dishes)
-            .UsingEntity(j => j.ToTable("DishOrder"));
-        
-        
+
+
         base.OnModelCreating(modelBuilder);
         
         

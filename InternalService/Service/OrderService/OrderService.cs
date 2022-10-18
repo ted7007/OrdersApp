@@ -78,7 +78,7 @@ public class OrderService : IOrderService
     private async Task<Models.Order> ProcessCreateArgumentAndGetOrderAsync(CreateOrderArgument argument)
     { 
         var mappedOrder = _mapper.Map<CreateOrderArgument, Models.Order>(argument);
-        mappedOrder.DateOfCreation = DateTimeOffset.UtcNow;
+        mappedOrder.DateOfCreation = DateTime.UtcNow;
         mappedOrder.Status = OrderStatus.WaitingForPayment;
         for (var i = 0; i < mappedOrder.Dishes.Count;i++)
         {

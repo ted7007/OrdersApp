@@ -10,7 +10,7 @@ public class Order
 
     public Guid EmployeeId { get; set; }
 
-    public DateTimeOffset DateOfCreation { get; set; }
+    public DateTime DateOfCreation { get; set; }    // SHOULD BE IN UTC!!!
 
     public OrderStatus Status { get; set; }
 
