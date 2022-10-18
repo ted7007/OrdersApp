@@ -75,7 +75,7 @@ public class OrderControllerTests : IClassFixture<IntegrationTestFactory<Program
           
           //Assert
           Assert.NotNull(actual);
-          Assert.True(actual.All(o => o.Price == 400));
+          Assert.True(actual.All(o => o.Price == expectedPrice));
           
      }
 
