@@ -13,7 +13,7 @@ using InternalService.Service.OrderService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-                       //todo comments
+
 
 
 var connectionString = GetConnectionString(builder.Environment.EnvironmentName, builder);

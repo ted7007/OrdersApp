@@ -29,6 +29,10 @@ public class ApplicationContext : DbContext
                 v => (OrderType)Enum.Parse(typeof(OrderType), v));
 
         modelBuilder
+            .Entity<Models.Order>()
+            .HasMany(o => o.Dishes);
+
+        modelBuilder
             .Entity<Models.Dish>()
             .HasData(
                 new Models.Dish[]
