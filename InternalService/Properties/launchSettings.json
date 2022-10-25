@@ -3,7 +3,6 @@
     "Development": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "MySQLOptions:Server":"127.0.0.1",

@@ -1,0 +1,24 @@
+﻿{
+  "Routes":
+  [
+    {
+      "DownStreamPathTemplate":"/api/{version}/{everything}",
+      "DownStreamScheme":"http",
+      "DownstreamHostAndPorts":
+      [
+        {
+          "Host":"localhost",
+          "Port":4000
+        }  
+      ],
+      "UpStreamPathTemplate":"/api/{version}/{everything}",
+      "UpStreamHttpMethod": ["Get", "Post"]
+    }
+  ],
+  
+  "GlobalConfiguration":
+  {
+    "RequestIdKey":"OcRequestId",
+    "AdministrationPath":"/administration"
+  }
+}
