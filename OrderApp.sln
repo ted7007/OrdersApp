@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternalServiceIntegrationT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{0E017D5C-05E0-4935-A74C-A70FEA6E153B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{A782FF17-AA7F-4002-8539-CFCA60FBB6D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{0E017D5C-05E0-4935-A74C-A70FEA6E153B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E017D5C-05E0-4935-A74C-A70FEA6E153B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E017D5C-05E0-4935-A74C-A70FEA6E153B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A782FF17-AA7F-4002-8539-CFCA60FBB6D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A782FF17-AA7F-4002-8539-CFCA60FBB6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A782FF17-AA7F-4002-8539-CFCA60FBB6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A782FF17-AA7F-4002-8539-CFCA60FBB6D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
