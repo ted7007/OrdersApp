@@ -2,7 +2,7 @@
 
 public class DataBaseOptions
 {
-    public const string OptionName = "MySQLOptions";
+    public const string OptionName = "DBOptions";
     
     public string Server { get; set; }
     

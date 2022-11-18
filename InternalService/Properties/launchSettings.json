@@ -5,11 +5,11 @@
       "dotnetRunMessages": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MySQLOptions:Server":"127.0.0.1",
-        "MySQLOptions:Port":"5432",
-        "MySQLOptions:DatabaseName":"OrderDataBase",
-        "MySQLOptions:UserName":"root",
-        "MySQLOptions:Password":"password"
+        "DBOptions:Server":"127.0.0.1",
+        "DBOptions:Port":"5432",
+        "DBOptions:DatabaseName":"OrderDataBase",
+        "DBOptions:UserName":"root",
+        "DBOptions:Password":"password"
                                           
       }
     }
