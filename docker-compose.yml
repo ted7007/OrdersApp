@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  postgres:
+  postgres1:
     image: postgres:15
     environment:
       POSTGRES_DB: "order"
@@ -9,3 +9,11 @@ services:
       POSTGRES_PASSWORD: "password"
     ports:
       - "5432:5432"
+  postgres2:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "identity"
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5433:5433"
