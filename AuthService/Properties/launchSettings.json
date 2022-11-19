@@ -8,12 +8,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DBOptions:Server":"127.0.0.1",
         "DBOptions:Port":"5432",
-        "DBOptions:DatabaseName":"OrderDataBase",
+        "DBOptions:DatabaseName":"identity",
         "DBOptions:UserName":"root",
         "DBOptions:Password":"password",
         "BearerOptions:Issuer":"http://localhost:3000",
         "BearerOptions:Audience":"http://localhost:3001",
-        "BearerOptions:Key":"JWTSUPERSecretKey",
+        "BearerOptions:Key":"IdentityApiKey",
         "BearerOptions:LifeTime":"1"
       }
     }
