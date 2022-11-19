@@ -2,6 +2,8 @@
   "Routes":
   [
     {
+      "UpStreamPathTemplate":"/api/{version}/{everything}",
+      "UpStreamHttpMethod": ["Get", "Post"],
       "DownStreamPathTemplate":"/api/{version}/{everything}",
       "DownStreamScheme":"http",
       "DownstreamHostAndPorts":
@@ -9,10 +11,26 @@
         {
           "Host":"localhost",
           "Port":4000
-        }  
+        }
       ],
-      "UpStreamPathTemplate":"/api/{version}/{everything}",
-      "UpStreamHttpMethod": ["Get", "Post"]
+      "AuthenticationOptions": 
+      {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "UpStreamPathTemplate": "/api/{version}/Authenticate/login}", 
+      "UpStreamHttpMethod": ["Get", "Post"],
+      "DownStreamPathTemplate": "/api/{version}/Authenticate/login",
+      "DownStreamScheme":"http",
+      "DownStreamHostAndPorts":
+      [
+        {
+          "Host": "localhost",
+          "Port": 3000
+        }
+      ]
     }
   ],
   
